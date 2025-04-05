@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Interativo</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            gap: 20px;
+        }
+        svg {
+            width: 50%;
+            max-width: 400px;
+        }
+        .estado {
+            fill: #ccc;
+            stroke: #333;
+            cursor: pointer;
+            transition: fill 0.3s;
+        }
+        .estado:hover {
+            fill: #ff6347;
+        }
+        .selecionado {
+            fill: #888 !important;
+        }
+        #info {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #333;
+            text-align: left;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mapa Interativo do Brasil</h1>
+    <div class="container">
+        <svg viewBox="0 0 500 500">
+            <path class="estado" id="sp" d="M150,200 L180,230 L200,200 L180,170 Z" />
+            <path class="estado" id="rj" d="M200,250 L230,270 L250,250 L230,230 Z" />
+        </svg>
+        <div id="info">
+            <h3>Informações</h3>
+            <p>Clique em um estado para ver os dados.</p>
+        </div>
+    </div>
+
+    <script>
+        let estadoSelecionado = null;
+
+        document.querySelectorAll('.estado').forEach(estado => {
+            estado.addEventListener('click', function() {
+                // Remove a seleção do estado anterior
+                if (estadoSelecionado) {
+                    estadoSelecionado.classList.remove('selecionado');
+                }
+                // Adiciona a seleção ao estado atual
+                this.classList.add('selecionado');
+                estadoSelecionado = this;
+
+                // Atualiza as informações do lado
+                document.getElementById('info').innerHTML = `
+                    <h3>Dados do Estado: ${this.id.toUpperCase()}</h3>
+                    <p>Taxa de Desemprego: --%</p>
+                    <p>Inflação: --%</p>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
