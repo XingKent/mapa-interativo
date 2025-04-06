@@ -1,41 +1,41 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
 
-  h1 {
-    margin-top: 20px;
-  }
+    h1 {
+      margin-top: 20px;
+    }
 
-  #mapa {
-    max-width: 800px;
-    margin: 20px auto;
-  }
+    #mapa {
+      max-width: 800px;
+      margin: 20px auto;
+    }
 
-  svg path {
-    fill: #ccc;
-    stroke: #333;
-    stroke-width: 1;
-    cursor: pointer;
-    transition: fill 0.3s;
-  }
+    svg path {
+      fill: #ccc;
+      stroke: #333;
+      stroke-width: 1;
+      cursor: pointer;
+      transition: fill 0.3s;
+    }
 
-  svg path:hover {
-    fill: #aaa;
-  }
+    svg path:hover {
+      fill: #b1b1b1;
+    }
 
-  svg path.selecionado {
-    fill: #888;
-  }
+    svg path.selecionado {
+      fill: #777777;
+    }
 
-  #info {
-    margin-top: 30px;
-    background: white;
-    padding: 20px;
-    display: inline-block;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
+    #info {
+      margin-top: 30px;
+      background: white;
+      padding: 20px;
+      display: inline-block;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgb(0, 0, 0);
+    }
