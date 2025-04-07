@@ -70,3 +70,21 @@ body {
       margin-right: auto;
       max-width: 700px;
     }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease;
+    }
+
+    @media (max-width: 768px) {
+      #info {
+        position: static;
+        margin: 20px auto;
+        width: 90%;
+      }
+    
+      svg {
+        width: 100%;
+        height: auto;
+      }
+    }
+    
