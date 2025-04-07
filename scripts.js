@@ -28,7 +28,7 @@ const dadosMock = {
     "TO": { desemprego: "...", inflacao: "...", periodo: "..." }
   };
 
-  const estados = document.querySelectorAll("svg path");
+const estados = document.querySelectorAll("svg path");
 const infoDiv = document.getElementById("info");
 const mapa = document.getElementById("mapa");
 
