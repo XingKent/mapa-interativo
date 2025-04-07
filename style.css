@@ -31,7 +31,7 @@ body {
       stroke: #333;
       stroke-width: 1;
       cursor: pointer;
-      transition: fill 0.3s;
+      transition: fill 0.3s ease;
     }
 
     svg path:hover {
@@ -49,6 +49,19 @@ body {
       display: inline-block;
       border-radius: 8px;
       box-shadow: 0 0 10px rgb(0, 0, 0);
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    #info h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #2c3e58;
+    }
+
+    #info p {
+      margin: 6px 0;
     }
 
     p {
