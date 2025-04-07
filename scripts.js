@@ -29,25 +29,38 @@ const dadosMock = {
   };
 
   const estados = document.querySelectorAll("svg path");
+const infoDiv = document.getElementById("info");
+const mapa = document.getElementById("mapa");
 
-  estados.forEach((estado) => {
-    estado.addEventListener("click", () => {
-      estados.forEach(e => e.classList.remove("selecionado"));
-      estado.classList.add("selecionado");
+estados.forEach((estado) => {
+  estado.addEventListener("click", (event) => {
+    event.stopPropagation();
 
-      const uf = estado.id;
-      const info = dadosMock[uf];
+    estados.forEach(e => e.classList.remove("selecionado"));
+    estado.classList.add("selecionado");
 
-      const infoDiv = document.getElementById("info");
-      if (info) {
-        infoDiv.innerHTML = `
-          <h2>${uf}</h2>
-          <p><strong>Taxa de Desemprego:</strong> ${info.desemprego}</p>
-          <p><strong>Inflação:</strong> ${info.inflacao}</p>
-          <p><strong>Período:</strong> ${info.periodo}</p>
-        `;
-      } else {
-        infoDiv.innerHTML = `<p>Dados não disponíveis para ${uf}.</p>`;
-      }
-    });
+    const uf = estado.id;
+    const info = dadosMock[uf];
+
+    if (info) {
+      infoDiv.innerHTML = `
+        <h2>${uf}</h2>
+        <p><strong>Taxa de Desemprego:</strong> ${info.desemprego}</p>
+        <p><strong>Inflação:</strong> ${info.inflacao}</p>
+        <p><strong>Período:</strong> ${info.periodo}</p>
+      `;
+    } else {
+      infoDiv.innerHTML = `<p>Dados não disponíveis para ${uf}.</p>`;
+    }
   });
+});
+
+document.addEventListener("click", (event) => {
+  if (!mapa.contains(event.target)) {
+    estados.forEach(e => e.classList.remove("selecionado"));
+    infoDiv.innerHTML = `
+      <h2>Informações</h2>
+      <p>Selecione um estado para ver os dados.</p>
+    `;
+  }
+});
