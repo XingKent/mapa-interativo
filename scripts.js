@@ -18,9 +18,10 @@ estados.forEach((estado) => {
       .then((dados) => {
         infoDiv.innerHTML = `
           <h2>${dados.uf}</h2>
-          <p><strong>Taxa de Desemprego:</strong> ${dados.desemprego}</p>
-          <p><strong>Inflação:</strong> ${dados.inflacao}</p>
-          <p><strong>Período:</strong> ${dados.periodo}</p>
+          <p><strong>Taxa de Desemprego:</strong> ${dados.desemprego ?? "Dados indisponíveis"}</p>
+          <p><strong>Inflação:</strong> ${dados.inflacao ?? "Dados indisponíveis"}</p>
+          <p><strong>Período:</strong> ${dados.periodo ?? "Dados indisponíveis"}</p>
+
         `;
       })
       .catch((err) => {
@@ -28,4 +29,16 @@ estados.forEach((estado) => {
         console.error(err);
       });
   });
+});
+
+document.addEventListener("click", (event) => {
+  const isPath = event.target.closest("svg path");
+  if (!isPath) {
+    estados.forEach((e) => e.classList.remove("selecionado"));
+    const infoDiv = document.getElementById("info");
+    infoDiv.innerHTML = `
+      <h2>Selecione um estado</h2>
+      <p>Clique em um estado do mapa para ver os dados de desemprego.</p>
+    `;
+  }
 });
