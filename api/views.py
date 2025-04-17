@@ -55,7 +55,7 @@ def indicadores_estado(request, uf):
 
     periodo_formatado = f"{ano_mes[:4]}-{ano_mes[4:]}"  #2024-01
 
-    #retorna tudo organizado num jso
+    #retorna tudo organizado num json
     return JsonResponse({
         "uf": uf,
         "desemprego": f"{desemprego_valor}%" if desemprego_valor != "Dados indisponíveis" else desemprego_valor,
