@@ -2,6 +2,7 @@ import requests
 from django.http import JsonResponse
 from django.shortcuts import render
 
+#NAO OUSE MEXER NESTA MERDA DE DICIONARIO!!!!!!
 UF_CODES = {
     "AC": 12, "AL": 27, "AP": 16, "AM": 13, "BA": 29, "CE": 23, "DF": 53,
     "ES": 32, "GO": 52, "MA": 21, "MT": 51, "MS": 50, "MG": 31, "PA": 15,
@@ -9,6 +10,7 @@ UF_CODES = {
     "RO": 11, "RR": 14, "SC": 42, "SP": 35, "SE": 28, "TO": 17
 }
 
+#NEM NESSE!!!!!
 CAPITAIS_CODIGO_IBGE = {
     "AC": "1200401", "AL": "2704302", "AP": "1600303", "AM": "1302603", "BA": "2927408",
     "CE": "2304400", "DF": "5300108", "ES": "3205309", "GO": "5208707", "MA": "2111300",
@@ -19,26 +21,28 @@ CAPITAIS_CODIGO_IBGE = {
 }
 
 def indicadores_estado(request, uf):
-    uf = uf.upper()
+    uf = uf.upper() #deixa a sigla maiuscula
+    #verifica se a sigla da UF é valida
     if uf not in UF_CODES or uf not in CAPITAIS_CODIGO_IBGE:
-        return JsonResponse({"erro": "UF inválida"}, status=404)
+        return JsonResponse({"erro": "UF inválida"}, status=404) #da erro se a sigla nn existe
 
+    #pega os códigos do estado e da capital no ibge
     codigo_ibge_uf = UF_CODES[uf]
     codigo_ibge_capital = CAPITAIS_CODIGO_IBGE[uf]
     ano_mes = "202401"
 
-    # --- Taxa de Desemprego ---
+    #Taxa de desemprego
     try:
-        url_desemprego = f"https://servicodados.ibge.gov.br/api/v3/agregados/4093/periodos/{ano_mes}/variaveis/4099?localidades=N3[{codigo_ibge_uf}]"
-        response_desemprego = requests.get(url_desemprego)
-        response_desemprego.raise_for_status()
-        dados = response_desemprego.json()
-        serie_desemprego = dados[0]["resultados"][0]["series"][0]["serie"]
+        url_desemprego = f"https://servicodados.ibge.gov.br/api/v3/agregados/4093/periodos/{ano_mes}/variaveis/4099?localidades=N3[{codigo_ibge_uf}]" #api
+        response_desemprego = requests.get(url_desemprego)#requisicao
+        response_desemprego.raise_for_status() 
+        dados = response_desemprego.json() #json
+        serie_desemprego = dados[0]["resultados"][0]["series"][0]["serie"] #nem eu sei como isso funciona direito mas basicamente pega o valor especifico que eu quero
         desemprego_valor = serie_desemprego.get(ano_mes, "Dados indisponíveis")
     except:
         desemprego_valor = "Dados indisponíveis"
 
-    # --- Inflação ---
+    #Inflacao
     try:
         url_inflacao = f"https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{ano_mes}/variaveis/63?localidades=N6[{codigo_ibge_capital}]"
         response_inflacao = requests.get(url_inflacao)
@@ -49,8 +53,9 @@ def indicadores_estado(request, uf):
     except:
         inflacao_valor = "Dados indisponíveis"
 
-    periodo_formatado = f"{ano_mes[:4]}-{ano_mes[4:]}"  # 2024-01
+    periodo_formatado = f"{ano_mes[:4]}-{ano_mes[4:]}"  #2024-01
 
+    #retorna tudo organizado num jso
     return JsonResponse({
         "uf": uf,
         "desemprego": f"{desemprego_valor}%" if desemprego_valor != "Dados indisponíveis" else desemprego_valor,
@@ -58,5 +63,6 @@ def indicadores_estado(request, uf):
         "periodo": periodo_formatado
     })
 
+#essa praga tirou 2 anos da minha vida mas ela só renderiza a pagina principal quando acesso a home
 def homepage(request):
     return render(request, 'main.html')
