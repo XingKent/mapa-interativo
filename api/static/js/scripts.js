@@ -18,9 +18,9 @@ estados.forEach((estado) => {
       .then((dados) => {
         infoDiv.innerHTML = `
           <h2>${dados.uf}</h2>
-          <p><strong>Taxa de Desemprego:</strong> ${dados.desemprego ?? "Dados indisponíveis"}</p>
-          <p><strong>Inflação:</strong> ${dados.inflacao ?? "Dados indisponíveis"}</p>
-          <p><strong>Período:</strong> ${dados.periodo ?? "Dados indisponíveis"}</p>
+          <p><strong>Taxa de Desemprego: </strong> ${dados.desemprego ?? "Dados indisponíveis"}</p>
+          <p><strong>Inflação: </strong> ${dados.inflacao ?? "Dados indisponíveis"}</p>
+          <p><strong>Período: </strong> ${dados.periodo ?? "Dados indisponíveis"}</p>
 
         `;
       })
