@@ -1,0 +1,100 @@
+body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #172a1f;
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      padding: 0 20px;
+    }
+
+    h1 {
+      margin-top: 0px;
+      padding: 40px;
+      color: #ffffff;
+      background-color:rgb(0, 129, 0);
+    }
+
+    #mapa {
+      max-width: 600px;
+      width: 100%;
+      margin: 0;
+    }
+
+    svg path {
+      fill: #a7d1a9;
+      stroke: #022700;
+      stroke-width: 1;
+      cursor: pointer;
+      transition: fill 0.7s ease;
+    }
+
+    svg path:hover {
+      fill: #00b40c;
+    }
+
+    svg path.selecionado {
+      fill: #074700;
+    }
+
+    #info {
+      margin: 5%;
+      background: white;
+      padding: 13px;
+      display: inline-block;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgb(0, 0, 0);
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    #info h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #2d582c;
+    }
+
+    #info p {
+      margin: 6px 0;
+    }
+
+    p {
+      display: flex;
+      margin-left: 30px;
+      margin-right: 30px;
+      margin-top: 35px;
+      border-radius: 12px;
+      text-align: justify;
+      padding: 15px;
+      font-size: 1.2rem;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d3c12;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease;
+    }
+
+    @media (max-width: 768px) {
+      #info {
+        position: static;
+        margin: 20px auto;
+        width: 90%;
+      }
+    
+      svg {
+        width: 100%;
+        height: auto;
+      }
+    }
+    
