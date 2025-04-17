@@ -1,5 +1,6 @@
 import requests
 from django.http import JsonResponse
+from django.shortcuts import render
 
 UF_CODES = {
     "AC": 12, "AL": 27, "AP": 16, "AM": 13, "BA": 29, "CE": 23, "DF": 53,
@@ -14,8 +15,8 @@ def indicadores_estado(request, uf):
         return JsonResponse({"erro": "UF inválida"}, status=404)
 
     codigo_ibge = UF_CODES[uf]
-    tabela_id = "4093"  # Taxa de desocupação
-    ano_mes = "202401"  # Janeiro de 2024
+    tabela_id = "4093"  #desemprego
+    ano_mes = "202401"  #mes e ano
     url = f"https://servicodados.ibge.gov.br/api/v3/agregados/{tabela_id}/periodos/{ano_mes}/variaveis/4099?localidades=N3[{codigo_ibge}]"
 
     try:
@@ -23,7 +24,7 @@ def indicadores_estado(request, uf):
         response.raise_for_status()
         dados = response.json()
 
-        # Verifica se os dados estão presentes na resposta
+        #verifica se os dados estão presentes na resposta
         resultados = dados[0].get("resultados", [])
         if not resultados:
             return JsonResponse({"erro": "Dados não encontrados para o estado informado."}, status=404)
@@ -51,3 +52,6 @@ def indicadores_estado(request, uf):
 
     except Exception as e:
         return JsonResponse({"erro": "Erro ao acessar a API do IBGE"}, status=500)
+
+def homepage(request):
+    return render(request, 'main.html')
