@@ -1,0 +1,1 @@
+Mapa interativo do brasil que mostrar índices de desemprego e inflação no ano de 2024. Para rodar basta instalar numa venv as dependencias que estão em requirements.txt e dar "python manage.py runserver"
