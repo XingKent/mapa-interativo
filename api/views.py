@@ -4,8 +4,8 @@ import requests
 from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
-
-# NAO OUSE MEXER NESTA MERDA DE DICIONARIO!!!!!!
+#DOR DE CABEÇA DO CARALHGOOO
+#NAO OUSE MEXER NESTA MERDA DE DICIONARIO!!!!!!
 UF_CODES = {
     "AC": 12, "AL": 27, "AP": 16, "AM": 13, "BA": 29, "CE": 23, "DF": 53,
     "ES": 32, "GO": 52, "MA": 21, "MT": 51, "MS": 50, "MG": 31, "PA": 15,
@@ -13,7 +13,7 @@ UF_CODES = {
     "RO": 11, "RR": 14, "SC": 42, "SP": 35, "SE": 28, "TO": 17
 }
 
-# NEM NESSE!!!!!
+#NEM NESSE!!!!!
 CAPITAIS_CODIGO_IBGE = {
     "AC": "1200401", "AL": "2704302", "AP": "1600303", "AM": "1302603", "BA": "2927408",
     "CE": "2304400", "DF": "5300108", "ES": "3205309", "GO": "5208707", "MA": "2111300",
