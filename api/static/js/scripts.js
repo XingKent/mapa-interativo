@@ -9,7 +9,7 @@ estados.forEach((estado) => {
     const uf = estado.id;
     const infoDiv = document.getElementById("info");
 
-    fetch(`/api/indicadores/${uf}/`)
+    fetch(`/indicadores/${uf}/`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Estado não encontrado");
