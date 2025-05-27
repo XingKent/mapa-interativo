@@ -1,5 +1,6 @@
 const estados = document.querySelectorAll("svg path");
 
+//literalmente o q faz o mapa funcionar favor nao tocar nesta desgraça
 estados.forEach((estado) => {
   estado.addEventListener("click", () => {
     estados.forEach((e) => e.classList.remove("selecionado"));
@@ -31,6 +32,8 @@ estados.forEach((estado) => {
   });
 });
 
+
+//click pra selecionar o estado
 document.addEventListener("click", (event) => {
   const isPath = event.target.closest("svg path");
   if (!isPath) {
@@ -38,7 +41,30 @@ document.addEventListener("click", (event) => {
     const infoDiv = document.getElementById("info");
     infoDiv.innerHTML = `
       <h2>Selecione um estado</h2>
-      <p>Clique em um estado do mapa para ver os dados de desemprego.</p>
+      <p>Clique em um estado do mapa para ver os dados.</p>
     `;
   }
+});
+
+
+//ocultar e mostrar as infos
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleBtn = document.getElementById("toggleInfo");
+  const infoText = document.getElementById("infoText");
+
+  let infoVisible = false;
+
+  toggleBtn.addEventListener("click", () => {
+    infoVisible = !infoVisible;
+
+    if (infoVisible) {
+      infoText.classList.add("show-info");
+      toggleBtn.innerHTML = '<img src="/static/img/close.png" class="close-img">';
+      toggleBtn.title = "Clique para ocultar as informações";
+    } else {
+      infoText.classList.remove("show-info");
+      toggleBtn.innerHTML = '<img src="/static/img/informacoes.png" class="info-img">';
+      toggleBtn.title = "Clique para ver mais informações";
+    }
+  });
 });
