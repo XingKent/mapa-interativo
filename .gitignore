@@ -1,4 +1,4 @@
 #vou ignorar esse arquivo por enquanto
 api_erro_server.txt
-db.sqlite3
+db/
 venv
