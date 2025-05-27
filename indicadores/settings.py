@@ -115,6 +115,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+#isso eu fiquei meia hora pesquisando pq infelizmente não veio direto com o django e me deu uma dor de cabeça ferrada
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
