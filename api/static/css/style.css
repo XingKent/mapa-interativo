@@ -2,7 +2,7 @@
 body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background-image: url('/static/img/1.png');
+      background-image: url('/static/img/1.png'); /* deixo os creditos dessa imagem para a minha querida Nicolita */
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
