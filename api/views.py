@@ -4,6 +4,8 @@ import requests
 from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
+from datetime import datetime
+
 #DOR DE CABEÇA DO CARALHGOOO
 #NAO OUSE MEXER NESTA MERDA DE DICIONARIO!!!!!!
 UF_CODES = {
@@ -40,6 +42,16 @@ with open(MOCK_PATH, encoding='utf-8') as mock_file:
     MOCK_JSON = json.load(mock_file)
     MOCK_VALUES = MOCK_JSON["valuesMap"]["março 2025"]
 
+def get_ano_mes_ibge():
+    agora = datetime.now()
+    ano_atual = agora.year
+
+    if agora.month <= 2:
+        ano_atual -= 1
+
+    return f"{ano_atual}01"
+
+
 def indicadores_estado(request, uf):
     uf = uf.upper()
     if uf not in UF_CODES or uf not in CAPITAIS_CODIGO_IBGE:
@@ -47,7 +59,7 @@ def indicadores_estado(request, uf):
 
     codigo_ibge_uf = UF_CODES[uf]
     codigo_ibge_capital = CAPITAIS_CODIGO_IBGE[uf]
-    ano_mes = "202401"
+    ano_mes = get_ano_mes_ibge()
 
    #desemprego
     try:
