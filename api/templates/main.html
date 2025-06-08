@@ -17,7 +17,8 @@
     <button id="toggleInfo" title="Clique para ver mais informações">
         <img src="{% static 'img/informacoes.png' %}" class="info-img">
     </button>
-  <p id="infoText" class="hidden-info">
+
+    <p id="infoText" class="hidden-info">
     A inflação e o desemprego são dois dos principais termômetros da economia de um país.
      A inflação representa o aumento contínuo e generalizado dos preços, afetando diretamente o custo de vida da população. 
      Quando elevada, ela reduz o poder de compra das famílias, impacta o consumo e gera incertezas no mercado. 
@@ -29,6 +30,7 @@
       tanto no setor público quanto no privado. O objetivo deste projeto é justamente oferecer essa visão de maneira clara e interativa, 
       aproximando a população das informações que moldam o cenário econômico do país.
     </p>
+
     <div id="container">
         <div id="mapa">
             <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -160,7 +162,15 @@
             <p1>Selecione um estado para ver os dados.</p1>
         </div>
     </div>
+
     <script src="{% static 'js/scripts.js' %}"></script>
+
+    <img src="{% static 'img/estacio.webp' %}" alt="Marca d'água Estácio" class="watermark">
+
+    <footer>
+        <p>© 2025 Seu Nome | Dados fornecidos pela API do IBGE | Projeto Acadêmico</p>
+    </footer>
+
 </body>
 </html>
 
