@@ -14,6 +14,10 @@ echo.
 echo --- INICIANDO O SERVIDOR DJANGO EM UMA NOVA JANELA ---
 start "" python manage.py runserver
 
+echo.
+echo Aguardando 5 segundos para o servidor iniciar completamente...
+timeout /t 5 /nobreak >nul
+
 echo Abrindo o site no seu navegador...
 start http://127.0.0.1:8000/
 
