@@ -42,15 +42,27 @@ with open(MOCK_PATH, encoding='utf-8') as mock_file:
     MOCK_JSON = json.load(mock_file)
     MOCK_VALUES = MOCK_JSON["valuesMap"]["março 2025"]
 
-def get_ano_mes_ibge():
-    agora = datetime.now()
-    ano_atual = agora.year
+#Aqui começa uma bruxaria sinistra pfv nao toca nisso (Deus sabe lá como isso ta funcionando)
+def get_ultimo_periodo_disponivel(agregado_id):
+    try:
+        url = f"https://servicodados.ibge.gov.br/api/v3/agregados/{agregado_id}/periodos"
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        periodos = response.json()
+        if periodos:
+            return periodos[-1]['id'] 
+    except requests.exceptions.RequestException as e:
+        print(f"Erro ao buscar períodos para o agregado {agregado_id}: {e}")
+    except (KeyError, IndexError) as e:
+        print(f"Erro ao parsear a resposta de períodos para o agregado {agregado_id}: {e}")
+    return None
 
-    if agora.month <= 2:
-        ano_atual -= 1
-
-    return f"{ano_atual}01"
-
+def formatar_periodo(periodo_str):
+    if not periodo_str or len(periodo_str) != 6:
+        return "N/D"
+    ano = periodo_str[:4]
+    mes = periodo_str[4:]
+    return f"{mes}/{ano}"
 
 def indicadores_estado(request, uf):
     uf = uf.upper()
@@ -59,41 +71,54 @@ def indicadores_estado(request, uf):
 
     codigo_ibge_uf = UF_CODES[uf]
     codigo_ibge_capital = CAPITAIS_CODIGO_IBGE[uf]
-    ano_mes = get_ano_mes_ibge()
+    
+    #Buscar periodos sozinho
+    #desemprego
+    periodo_desemprego = get_ultimo_periodo_disponivel("4093")
+    #inflacao
+    periodo_inflacao = get_ultimo_periodo_disponivel("7060")
 
-   #desemprego
-    try:
-        url_desemprego = f"https://servicodados.ibge.gov.br/api/v3/agregados/4093/periodos/{ano_mes}/variaveis/4099?localidades=N3[{codigo_ibge_uf}]"
-        response_desemprego = requests.get(url_desemprego)
-        response_desemprego.raise_for_status()
-        dados = response_desemprego.json()
-        serie_desemprego = dados[0]["resultados"][0]["series"][0]["serie"]
-        desemprego_valor = serie_desemprego.get(ano_mes, "Dados indisponíveis")
-    except:
-        desemprego_valor = "Dados indisponíveis"
+    desemprego_valor = "Dados indisponíveis"
+    inflacao_valor = "Dados indisponíveis"
 
-    #inflação
-    try:
-        url_inflacao = f"https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{ano_mes}/variaveis/63?localidades=N6[{codigo_ibge_capital}]"
-        response_inflacao = requests.get(url_inflacao)
-        response_inflacao.raise_for_status()
-        dados_inf = response_inflacao.json()
-        serie_inflacao = dados_inf[0]["resultados"][0]["series"][0]["serie"]
-        inflacao_valor = serie_inflacao.get(ano_mes, "Dados indisponíveis")
-    except:
-        inflacao_valor = "Dados indisponíveis"
+    #Buscar desemprego
+    if periodo_desemprego:
+        try:
+            url_desemprego = f"https://servicodados.ibge.gov.br/api/v3/agregados/4093/periodos/{periodo_desemprego}/variaveis/4099?localidades=N3[{codigo_ibge_uf}]"
+            response_desemprego = requests.get(url_desemprego, timeout=5)
+            response_desemprego.raise_for_status()
+            dados = response_desemprego.json()
+            serie_desemprego = dados[0]["resultados"][0]["series"][0]["serie"]
+            desemprego_valor = serie_desemprego.get(periodo_desemprego, "Dados indisponíveis")
+        except (requests.exceptions.RequestException, KeyError, IndexError) as e:
+            print(f"Erro ao buscar dados de desemprego para {uf}: {e}")
+            desemprego_valor = "Dados indisponíveis"
 
-    #se valor invalido busca no mock
+    #Buscar inflacao
+    if periodo_inflacao:
+        try:
+            url_inflacao = f"https://servicodados.ibge.gov.br/api/v3/agregados/7060/periodos/{periodo_inflacao}/variaveis/63?localidades=N6[{codigo_ibge_capital}]"
+            response_inflacao = requests.get(url_inflacao, timeout=5)
+            response_inflacao.raise_for_status()
+            dados_inf = response_inflacao.json()
+            serie_inflacao = dados_inf[0]["resultados"][0]["series"][0]["serie"]
+            inflacao_valor = serie_inflacao.get(periodo_inflacao, "Dados indisponíveis")
+        except (requests.exceptions.RequestException, KeyError, IndexError) as e:
+            print(f"Erro ao buscar dados de inflação para {uf}: {e}")
+            inflacao_valor = "Dados indisponíveis"
+
+    #Se valor da API for inválido, busca no mock
     if inflacao_valor in ("...", "Dados indisponíveis"):
         nome_cidade = UF_PARA_CIDADE_JSON.get(uf)
         inflacao_valor = MOCK_VALUES.get(nome_cidade, "Dados indisponíveis")
 
-    periodo_formatado = f"{ano_mes[:4]}-{ano_mes[4:]}"
+    #Formata os dados para a resposta
     return JsonResponse({
         "uf": uf,
         "desemprego": f"{desemprego_valor}%" if desemprego_valor != "Dados indisponíveis" else desemprego_valor,
         "inflacao": f"{inflacao_valor}%" if inflacao_valor != "Dados indisponíveis" else inflacao_valor,
-        "periodo": periodo_formatado
+        "periodo_desemprego": formatar_periodo(periodo_desemprego),
+        "periodo_inflacao": formatar_periodo(periodo_inflacao)
     })
 
 def homepage(request):
