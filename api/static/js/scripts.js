@@ -17,13 +17,11 @@ estados.forEach((estado) => {
         return res.json();
       })
       .then((dados) => {
-        infoDiv.innerHTML = `
-          <h2>${dados.uf}</h2>
-          <p><strong>Taxa de Desemprego: </strong> ${dados.desemprego ?? "Dados indisponíveis"}</p>
-          <p><strong>Inflação: </strong> ${dados.inflacao ?? "Dados indisponíveis"}</p>
-          <p><strong>Período: </strong> ${dados.periodo ?? "Dados indisponíveis"}</p>
-
-        `;
+          infoDiv.innerHTML = `
+            <h2>${dados.uf}</h2>
+            <p><strong>Taxa de Desemprego: ${dados.desemprego} (Ref: ${dados.periodo_desemprego})</strong></p>
+            <p><strong>Inflação: ${dados.inflacao} (Ref: ${dados.periodo_inflacao})</strong></p>
+          `;
       })
       .catch((err) => {
         infoDiv.innerHTML = `<p>Não foi possível carregar os dados para ${uf}.</p>`;
