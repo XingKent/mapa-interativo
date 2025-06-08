@@ -134,3 +134,45 @@ body {
       }
     }
     
+    /* ======================================================= */
+    /* INÍCIO DA SEÇÃO DO RODAPÉ (CÓDIGO CORRIGIDO)      */
+    /* ======================================================= */
+
+    footer {
+      /* Para garantir a centralização do texto e dar um bom espaçamento */
+      width: 100%;
+      text-align: center; 
+      
+      /* Aumentamos o espaço no topo (padding-top) para o texto não ficar atrás da logo */
+      padding: 40px 20px 20px 20px; 
+      
+      /* Aumentamos a margem para o conteúdo principal não encostar na logo */
+      margin-top: 100px; 
+      
+      background-color: rgba(13, 60, 18, 0.9); /* Um pouco mais opaco para melhor leitura */
+      color: #f0f0f0;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      box-sizing: border-box; /* Boa prática para o padding não alterar a largura total */
+    }
+
+    /* Regra específica para o texto do rodapé, garantindo que ele se comporte bem */
+    footer p {
+      display: inline-block; /* Ajuda na centralização e respeito ao padding */
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      font-size: 0.9em;
+      font-weight: 300;
+      background-color: transparent; /* Garante que não tenha outro fundo */
+      color: #f0f0f0;               /* Garante a cor do texto */
+      text-align: center;            /* Garante o alinhamento central */
+    }
+    .watermark {
+      opacity: 70%;
+      display: flex;
+      margin-left: auto;
+      margin-bottom: -6.6rem;
+      width: 100px;
+      height: auto;
+    }
